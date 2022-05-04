@@ -83,16 +83,15 @@ def stats(data: pd.DataFrame) -> (float, pd.DataFrame, pd.DataFrame, pd.DataFram
 
     # now we find the ordered list of the institutions that entered the most teams,
     # including the number of teams that they entered (ordered by number of teams)
-    rank_n_teams = data.groupby(['Institution', 'Institution ID'])\
-        .size().reset_index(name='num_teams')\
-        .sort_values('num_teams', ascending=False)
-    rank_n_teams = rank_n_teams.drop_duplicates('Institution ID').drop('Institution ID', axis=1)
+    rank_n_teams = data.groupby(['Institution ID', 'Institution'])\
+        .size().reset_index(name='num_teams')
+    rank_n_teams = rank_n_teams.drop_duplicates('Institution ID').sort_values('num_teams', ascending=False)
     # we now found the thing that Ted gave an obscenely long description
 
     # now we find the list of all institutions ranked 'outstanding' ordered by name
     outst = data[data['l_Ranking'] == "outstanding winner"].sort_values('Institution')
     outst = outst.drop_duplicates("Institution ID")
-    outst = outst[['Institution', 'Ranking']]
+    outst = outst[['Institution', 'Institution ID', 'Ranking']]
     # and we found it!
 
     # now we find US teams with meritorious or higher rank
@@ -100,8 +99,8 @@ def stats(data: pd.DataFrame) -> (float, pd.DataFrame, pd.DataFrame, pd.DataFram
     mask = data['l_Ranking'].isin(['meritorious', 'finalist', 'outstanding winner']) & data['l_Country'].isin(["us", "usa"])
     # apply mask to get all rows that fit the criterion
     usmerit = data[mask]
-    usmerit.drop_duplicates("Institution ID")
-    usmerit = usmerit[['Institution', 'Country', 'Ranking']]
+    usmerit = usmerit.drop_duplicates("Institution ID")
+    usmerit = usmerit[['Institution', 'Institution ID', 'Country', 'Ranking']]
     # and were done!
 
     # return them
