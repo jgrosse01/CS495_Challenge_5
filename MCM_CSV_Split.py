@@ -65,7 +65,7 @@ def clean_csv(data: pd.DataFrame) -> pd.DataFrame:
 
     # give a unique Institution ID to every unique pair of institution and city
     # this allows for multiple cities with the same named university or multiple university names in the same city
-    data['Institution ID'] = data.groupby(['l_Institution', 'l_City']).ngroup()
+    data['Institution ID'] = data.groupby(['l_Institution']).ngroup()
 
     # do not drop duplicates here because it reduces each institution to one row which interferes with further use
 
@@ -83,12 +83,18 @@ def stats(data: pd.DataFrame) -> (float, pd.DataFrame, pd.DataFrame, pd.DataFram
 
     # now we find the ordered list of the institutions that entered the most teams,
     # including the number of teams that they entered (ordered by number of teams)
-    rank_n_teams = data.groupby(['Institution ID', 'Institution'])\
+    # group by ID for unique check and get the number of each ID as the number of teams
+    rank_n_teams = data.groupby(['Institution ID'])\
         .size().reset_index(name='num_teams')
+    # merge data into it for institution name to come back
+    rank_n_teams = pd.merge(rank_n_teams, data, on='Institution ID', how='left')
+    # drop the duplicate rows and sort
     rank_n_teams = rank_n_teams.drop_duplicates('Institution ID').sort_values('num_teams', ascending=False)
+    rank_n_teams = rank_n_teams[['Institution', 'num_teams']]
     # we now found the thing that Ted gave an obscenely long description
 
     # now we find the list of all institutions ranked 'outstanding' ordered by name
+    # search data for matching rank
     outst = data[data['l_Ranking'] == "outstanding winner"].sort_values('Institution')
     outst = outst.drop_duplicates("Institution ID")
     outst = outst[['Institution', 'Institution ID', 'Ranking']]
