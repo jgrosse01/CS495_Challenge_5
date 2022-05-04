@@ -112,6 +112,8 @@ def stats(data: pd.DataFrame) -> (float, pd.DataFrame, pd.DataFrame, pd.DataFram
 def split_csv(data: pd.DataFrame) -> (pd.DataFrame, pd.DataFrame):
     # take everything except for those columns exclusively required for team into institution
     inst = data.drop(['Team Number', 'Problem', 'Advisor', 'Ranking'], axis=1)
+    # drop duplicate ID before splitting
+    inst = inst.drop_duplicates('Institution ID')
 
     # select everything except what is required for the team csv
     team = data.drop(['Institution', 'City', 'State/Province', 'Country'], axis=1)
