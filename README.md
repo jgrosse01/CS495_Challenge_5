@@ -6,7 +6,7 @@ In order to run this script, I recommend a bash console. Linux and MacOS have th
 
 To run the program:
 1. Open gitbash and navigate to a file location of your choosing.
-2. Run the command "git clone https://github.com/jgrosse01/CS495_Challenge_5" without the quotation marks.
+2. Run the command "git clone https://github.com/jgrosse01/CS495_Challenge_5_AND_6" without the quotation marks.
 3. Enter the folder that was just created.
 4. Place any csv files of the proper format that you would like to be split into the data folder (the year 2015 already exists).
 5. Use your system's python keyword (mine is simply "python") and pass it the name of the script and the name of the file you placed in the data folder. An example command would be "python MCM_CSV_Split.py 2015.csv" without the quotation marks.
@@ -25,7 +25,7 @@ In order to run this script, I recommend a bash console. Linux and MacOS have th
 
 To run the updated program:
 1. Open gitbash and navigate to a file location of your choosing.
-2. Run the command "git clone -b Challenge6 --single-branch https://github.com/jgrosse01/CS495_Challenge_5" without the quotation marks.
+2. Run the command "git clone -b Challenge6 --single-branch https://github.com/jgrosse01/CS495_Challenge_5_AND_6" without the quotation marks.
 3. Enter the folder that was just created.
 4. Place any csv files of the proper format that you would like to be processed into the data folder (the year 2015 already exists).
 5. Use your system's python keyword (mine is simply "python") and pass it the name of the script and the name of the file you placed in the data folder. An example command would be "python MCM_CSV_Split.py 2015.csv" without the quotation marks.
